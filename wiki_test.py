@@ -24,4 +24,4 @@ def test_homepage(client):
 def test_pagename(client):
     resp = client.get("/view/PageName")
     assert resp.status_code == 200
-    assert b"<pre>Front Page</pre>" in resp.data
+    assert b"<pre>Page Name Contents</pre>" in resp.data
