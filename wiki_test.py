@@ -16,6 +16,12 @@ def test_import():
 
 
 def test_homepage(client):
-    resp = client.get("/")
+    resp = client.get("/view/")
+    print(resp.data)
     assert resp.status_code == 200
-    assert b"Hello, World!\n" in resp.data
+    assert b"<pre>Hello, this is the Arch team&#39;s front page!</pre>" in resp.data
+
+def test_pagename(client):
+    resp = client.get("/view/PageName")
+    assert resp.status_code == 200
+    assert b"<pre>Page Name Contents</pre>" in resp.data
