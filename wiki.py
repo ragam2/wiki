@@ -1,14 +1,15 @@
 from flask import Flask,redirect, url_for
+from flask import request,Markup
 from flask import render_template
 
 app = Flask(__name__)
 
 @app.route("/")
-def main(page_name, page_content):
+def main():
     return render_template(
         "main.html",
-        page_name=page_name,
-        page_content=page_content,
+        page_name="Front Page",
+        page_content="Welcome to Arch's Frontpage!"
     )
 
 @app.route("/view/")
@@ -22,3 +23,24 @@ def get_page_name(page_name):
         contents = f.read()
     
     return contents
+
+@app.route("/view/page-edit-form")
+def get_edit_form():
+    with open("templates/FrontPage.html", "r") as f:
+        cc = f.read()
+    return render_template(
+        "pageform.html",
+        current_contents=cc
+    )
+
+@app.route("/view/handle-page-edits", methods=["GET", "POST"])
+def edit_page():
+    con = request.form["contents"]
+    cha = request.form["changes"]
+    with open("pages/EditPage.txt", "w") as f:
+        f.write(con)
+    #with open("pages/EditPage.txt", "r") as f:
+    return render_template(
+        "FrontPage.html",
+        contents=Markup(con)
+    )
