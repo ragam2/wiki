@@ -14,7 +14,13 @@ def main():
 
 @app.route("/view/")
 def get_front_page():
-    return redirect(url_for('get_page_name', page_name = "FrontPage"))
+    # return redirect(url_for('get_page_name', page_name = "FrontPage"))
+      return render_template(
+        "main.html",
+        page_name="Front Page",
+        page_content="Welcome to Arch's Frontpage!"
+    )
+
 
 @app.route("/view/<page_name>")
 def get_page_name(page_name):
@@ -37,7 +43,9 @@ def get_edit_form():
 def edit_page():
     con = request.form["contents"]
     cha = request.form["changes"]
-    with open("pages/EditPage.txt", "w") as f:
+    page_name = request.form["name"]
+    fullpath = "pages/" + page_name + ".txt"
+    with open(fullpath, "w") as f:
         f.write(con)
     #with open("pages/EditPage.txt", "r") as f:
     return render_template(

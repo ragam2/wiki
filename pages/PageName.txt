@@ -1,3 +1,9 @@
-Page Contents
-Name
-Text
+        <!DOCTYPE html>
+{{contents}}
+<form action="/"> <input type="submit" value="Back to Homepage"></input> </form>
+
+<h1> Title </h1>
+
+<p> Information: </p>
+
+<a href="https://www.google.com/search?q=page+link&rlz=1CAZVTZ_enPR950&oq=page+link&aqs=chrome..69i57.2128j0j1&sourceid=chrome&ie=UTF-8">Page Link</a>
