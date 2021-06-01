@@ -58,14 +58,17 @@ def edit_page():
     # if it matches allowed tags
     # Currently brute-force gonna try to find library that does this better
 
-    allowed = ["<h1","</h", "<a ", "</a", "<p>", "</p"]
+    allowed = "<h1</h1<h2</h2<h3</h3<a></a<p></p"
+    safe = True
     for i in range(len(con)):
         # If iterator encounters open bracket
         if con[i] == "<":
             # Check the next 2 letters to see if theyre in allowed
-            if con[i:i+3] not in allowed:
-                # Markup.escape() changes all the HTML characters passed into
-                # "safe" text
+            if con[i:i+2] not in allowed:
+                safe = False
+            # Markup.escape() changes all the HTML characters passed into
+            # "safe" text
+            if safe == False:
                 con = Markup.escape(con)
                 break
 
