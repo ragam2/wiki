@@ -6,49 +6,75 @@ app = Flask(__name__)
 
 @app.route("/")
 def main():
+    # For now, home page won't be able to be edited.
+    with open("pages/main.txt", "r") as f:
+        contents = f.read()
     return render_template(
         "main.html",
         page_name="Front Page",
-        page_content="Welcome to Arch's Frontpage!"
+        page_content=Markup(contents)
     )
-
-@app.route("/view/")
-def get_front_page():
-    # return redirect(url_for('get_page_name', page_name = "FrontPage"))
-      return render_template(
-        "main.html",
-        page_name="Front Page",
-        page_content="Welcome to Arch's Frontpage!"
-    )
-
 
 @app.route("/view/<page_name>")
 def get_page_name(page_name):
-    fullpath = "pages/" + page_name + ".txt"
-    with open(fullpath, "r") as f:
-        contents = f.read()
-    
-    return contents
+    # Fullpath points to text file in pages, 
+    # template_path points to HTML template file
 
-@app.route("/view/page-edit-form")
-def get_edit_form():
-    with open("templates/FrontPage.html", "r") as f:
-        cc = f.read()
+    fullpath = "pages/" + page_name + ".txt"
+    template_path = page_name + ".html"
+    with open(fullpath, "r") as f:
+        con = f.read()
+    
     return render_template(
-        "pageform.html",
-        current_contents=cc
+        template_path,
+        contents=Markup(con)
     )
 
-@app.route("/view/handle-page-edits", methods=["GET", "POST"])
+@app.route("/edit-form/<page_name>")
+def get_edit_form(page_name):
+    # Plugs the text file's contents into a render template
+    # for the given page
+    with open("pages/" + page_name + ".txt", "r") as f:
+        cc = f.read()
+    return render_template(
+        "editform.html",
+        current_contents=cc,
+        page=page_name
+    )
+
+@app.route("/edit/", methods=["GET", "POST"])
 def edit_page():
+    # Receives content and changes information from server
+    page_name = request.form["page_name"]
     con = request.form["contents"]
     cha = request.form["changes"]
-    page_name = request.form["name"]
+
+    # Variables for the text and html file path's for <page_name>
     fullpath = "pages/" + page_name + ".txt"
+    template_path = page_name + ".html"
+
+    # The idea is that since the three allowed tags all start the same
+    # we can check the contents after a open brace is encountered to see
+    # if it matches allowed tags
+    # Currently brute-force gonna try to find library that does this better
+
+    allowed = ["<h1","</h", "<a ", "</a", "<p>", "</p"]
+    for i in range(len(con)):
+        # If iterator encounters open bracket
+        if con[i] == "<":
+            # Check the next 2 letters to see if theyre in allowed
+            if con[i:i+3] not in allowed:
+                # Markup.escape() changes all the HTML characters passed into
+                # "safe" text
+                con = Markup.escape(con)
+                break
+
+    # Writes the changes to the text file
     with open(fullpath, "w") as f:
-        f.write(con)
-    #with open("pages/EditPage.txt", "r") as f:
+        f.write(Markup(con))
+
+    # Returns the template with filtered data
     return render_template(
-        "FrontPage.html",
+        template_path,
         contents=Markup(con)
     )

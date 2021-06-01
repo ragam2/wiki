@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<title>"Page Edit</title>
+<!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
+<!-- input type="hidden" can pass information without it needing to be entered by the user-->
+<form action="{{url_for('edit_page')}}" method="POST">
+    
+    <input type="hidden" name=page_name id=page_name value={{page}}></input>
+
+    <p><label for="content_box">"Enter your changes:"</label></p>
+
+    <p>
+        <textarea id="content_box" name="contents"
+        style="width: 750px; font-size: 14px; height: 500px;">
+        {{current_contents}}
+        </textarea>
+    </p>
+    
+    <p><label for="changes_box">"Briefly describe what changes you've made:"</label></p>
+
+    <p><textarea id="changes_box" name="changes" style="width: 750px;"></textarea></p>
+
+    <p><input type="submit"</input></p>
+</form>

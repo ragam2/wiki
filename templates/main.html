@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <title>{{ page_name }}</title>
-<h1>{{page_name}}</h1>
+<h1>{{ page_name }}</h1>
 <pre>{{ page_content }}</pre>
+<!-- url_for() finds the route to the given function, and we can pass the function's parameters as well -->
+
 <h1>"Links to other pages:</h1>
-<a href=/view/page-edit-form>Edit Form</a>
+<ul style="list-style-type:none;">
+    <li><a href="{{ url_for('get_page_name', page_name='test_page') }}">Test Page</a></li>
+    <li><a href="{{ url_for('get_page_name', page_name='test_page2')}}">Test Page 2</a></li>
+</ul>

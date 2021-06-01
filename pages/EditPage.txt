@@ -1,9 +1,0 @@
-        <!DOCTYPE html>
-{{contents}}
-<form action="/"> <input type="submit" value="Back to Homepage"></input> </form>
-
-<h1>Title</h1>
-
-<p>Un párrafo, también llamado parágrafo (del griego παράγραφος [parágraphos], y este de παρα, «próximo, semejante», y γραφος, «escritura»), es una unidad comunicativa formada por un conjunto de oraciones secuenciales que trata un mismo tema. Está compuesto por un conjunto de oraciones que tienen cierta unidad temática o que, sin tenerla, se enuncian juntas. Es un componente del texto que en su aspecto externo comienza con una mayúscula y termina en un punto y aparte. Comprende varias oraciones relacionadas sobre el mismo subtema; una de ellas expresa la idea principal.</p>
-
-<a href="https://es.wikipedia.org/wiki/P%C3%A1rrafo"> parrafo</a>
