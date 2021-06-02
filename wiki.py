@@ -1,8 +1,9 @@
-from flask import Flask,redirect, url_for
-from flask import request,Markup
+from flask import Flask
+from flask import request, Markup
 from flask import render_template
 
 app = Flask(__name__)
+
 
 @app.route("/")
 def main():
@@ -15,20 +16,23 @@ def main():
         page_content=Markup(contents)
     )
 
+
 @app.route("/view/<page_name>")
 def get_page_name(page_name):
-    # Fullpath points to text file in pages, 
+
+    # Fullpath points to text file in pages,
     # template_path points to HTML template file
 
     fullpath = "pages/" + page_name + ".txt"
     template_path = page_name + ".html"
     with open(fullpath, "r") as f:
         con = f.read()
-    
+
     return render_template(
         template_path,
         contents=Markup(con)
     )
+
 
 @app.route("/edit-form/<page_name>")
 def get_edit_form(page_name):
@@ -42,12 +46,13 @@ def get_edit_form(page_name):
         page=page_name
     )
 
+
 @app.route("/edit/", methods=["GET", "POST"])
 def edit_page():
     # Receives content and changes information from server
     page_name = request.form["page_name"]
     con = request.form["contents"]
-    cha = request.form["changes"]
+    # cha = request.form["changes"]
 
     # Variables for the text and html file path's for <page_name>
     fullpath = "pages/" + page_name + ".txt"
@@ -68,7 +73,7 @@ def edit_page():
                 safe = False
             # Markup.escape() changes all the HTML characters passed into
             # "safe" text
-            if safe == False:
+            if not safe:
                 con = Markup.escape(con)
                 break
 
