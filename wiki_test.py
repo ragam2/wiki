@@ -53,11 +53,12 @@ def test_edit_page(client):
     resp = client.get(
         "/edit/",
         follow_redirects=True,
-        data=dict(page_name="test_page",
-                  contents=('<h1>Hello World!</h1>'
-                            '<p>This the the first test page!</p>'),
-                  changes="greeting added")
-        )
+        data=dict(
+            page_name="test_page",
+            contents=("<h1>Hello World!</h1>" "<p>This the the first test page!</p>"),
+            changes="greeting added",
+        ),
+    )
     print(resp.data)
     with open("pages/test_page.txt", "r") as f:
         expected = bytes(f.read(), "utf-8")

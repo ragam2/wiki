@@ -11,9 +11,7 @@ def main():
     with open("pages/main.txt", "r") as f:
         contents = f.read()
     return render_template(
-        "main.html",
-        page_name="Front Page",
-        page_content=Markup(contents)
+        "main.html", page_name="Front Page", page_content=Markup(contents)
     )
 
 
@@ -28,10 +26,7 @@ def get_page_name(page_name):
     with open(fullpath, "r") as f:
         con = f.read()
 
-    return render_template(
-        template_path,
-        contents=Markup(con)
-    )
+    return render_template(template_path, contents=Markup(con))
 
 
 @app.route("/edit-form/<page_name>")
@@ -40,11 +35,7 @@ def get_edit_form(page_name):
     # for the given page
     with open("pages/" + page_name + ".txt", "r") as f:
         cc = f.read()
-    return render_template(
-        "editform.html",
-        current_contents=cc,
-        page=page_name
-    )
+    return render_template("editform.html", current_contents=cc, page=page_name)
 
 
 @app.route("/edit/", methods=["GET", "POST"])
@@ -69,7 +60,7 @@ def edit_page():
         # If iterator encounters open bracket
         if con[i] == "<":
             # Check the next 2 letters to see if theyre in allowed
-            if con[i:i+2] not in allowed:
+            if con[i : i + 2] not in allowed:
                 safe = False
             # Markup.escape() changes all the HTML characters passed into
             # "safe" text
@@ -82,7 +73,4 @@ def edit_page():
         f.write(Markup(con))
 
     # Returns the template with filtered data
-    return render_template(
-        template_path,
-        contents=Markup(con)
-    )
+    return render_template(template_path, contents=Markup(con))
