@@ -1,10 +1,5 @@
-import pytest # type: ignore
-
-# from flask import Flask, redirect, url_for
+import pytest  # type: ignore
 from flask import Markup
-
-# from flask import render_template
-
 import wiki
 from wiki import filter_info
 
