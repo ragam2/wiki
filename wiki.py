@@ -1,6 +1,5 @@
 from flask import Flask
-from flask import request, Markup
-from flask import render_template
+from flask import request, Markup, render_template
 
 app = Flask(__name__)
 
