@@ -12,8 +12,10 @@ format:
   - pip install black==21.4b2
   - black --check .
 type-check:
+  script:
   - pip install mypy==0.812
   - mypy .
 coverage-report:
+  script:
   - pip install pytest-cov==2.11.1
   - pytest . --cov=wiki --cov=wiki_test --cov-report term-missing --cov-branch
