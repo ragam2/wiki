@@ -1,10 +1,12 @@
 import pytest
 
 # from flask import Flask, redirect, url_for
-# from flask import request, Markup
+from flask import Markup
+
 # from flask import render_template
 
 import wiki
+from wiki import filter_info
 
 CURR_DIR = "pages"
 
@@ -64,3 +66,21 @@ def test_edit_page(client):
         expected = bytes(f.read(), "utf-8")
     assert resp.status_code == 200
     assert expected in resp.data
+
+
+def test_filter_info():
+    # For some reason, it seems you have to import filter_info and markup
+    # individually rather than just from wiki.
+
+    # This asserts that invalid text (<script>, etc) is escaped,
+    # and valid text (h1, h2, h3, p, a) is not escaped
+    # and no tags also go through
+    assert filter_info("<script>window.alert('Hacked!')</script>") == Markup.escape(
+        "<script>window.alert('Hacked!')</script>"
+    )
+
+    assert filter_info("<h1>Hello World!</h1><p>Hello World!</p>") == Markup(
+        "<h1>Hello World!</h1><p>Hello World!</p>"
+    )
+
+    assert filter_info("Hello World!") == Markup("Hello World!")
