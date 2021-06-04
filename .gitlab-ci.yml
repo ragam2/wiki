@@ -18,4 +18,4 @@ type-check:
 coverage-report:
   script:
   - pip install pytest-cov==2.11.1
-  - pytest . --cov=wiki --cov=wiki_test --cov-report term-missing --cov-branch
+  - pytest . --cov=wiki.py --cov=wiki_test.py --cov-report term-missing --cov-branch

@@ -1,4 +1,4 @@
-import pytest
+import pytest # type: ignore
 
 # from flask import Flask, redirect, url_for
 from flask import Markup
