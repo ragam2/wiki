@@ -14,6 +14,7 @@ format:
 type-check:
   script:
   - pip install Django==3.2.4
+  - pip install django-stubs
   - pip install mypy==0.812
   - mypy .
 coverage-report:
