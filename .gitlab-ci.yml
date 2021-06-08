@@ -13,9 +13,12 @@ format:
   - black --check .
 type-check:
   script:
+  - pip install Django==3.2.4
+  - pip install django-stubs
   - pip install mypy==0.812
   - mypy .
 coverage-report:
   script:
   - pip install pytest-cov==2.11.1
+  - pip install -r requirements.txt
   - pytest . --cov=wiki --cov=wiki_test --cov-report term-missing --cov-branch

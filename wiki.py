@@ -1,4 +1,8 @@
-from flask import Flask, request, Markup, render_template
+from flask import Flask
+from flask import request, Markup
+from flask import render_template
+from django.utils.html import strip_tags
+import os.path
 
 app = Flask(__name__)
 
@@ -75,3 +79,38 @@ def edit_page():
 
     # Returns the template with filtered data
     return render_template(template_path, contents=Markup(con))
+
+
+@app.route("/api/v1/page/<page_name>/get")
+def page_api_get(page_name):
+    format = request.args.get("format", "all")
+    fullpath = "pages/" + page_name + ".txt"
+
+    if not os.path.isfile(fullpath):
+        json_response = {"success": False, "reason": "Page Not found"}
+        status_code = 404
+        return json_response, status_code
+
+    with open(fullpath, "r") as f:
+        cc = f.read()
+    json_response = {}
+    status_code = 0
+
+    if format == "html":
+        status_code = 200
+        json_response["success"] = True
+        json_response[format] = cc
+    elif format == "raw":
+        status_code = 200
+        json_response["success"] = True
+        json_response[format] = strip_tags(cc)
+    elif format == "all":
+        status_code = 200
+        json_response["success"] = True
+        json_response["html"] = cc
+        json_response["raw"] = strip_tags(cc)
+    else:
+        status_code = 400
+        json_response["success"] = False
+        json_response["reason"] = "Unsupported format"
+    return json_response, status_code
