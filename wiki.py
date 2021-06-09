@@ -8,7 +8,7 @@ arch_pages = set()
 
 
 @app.route("/Failure/")
-def filter_info(con: str) -> str:
+def filter_info(con: str) -> tuple:
     # The idea is that since the three allowed tags all start the same
     # we can check the contents after a open brace is encountered to see
     # if it matches allowed tags
