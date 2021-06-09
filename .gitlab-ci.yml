@@ -17,5 +17,5 @@ type-check:
   - mypy .
 coverage-report:
   script:
-  - pip install pytest-cov==2.11.1
+  - pip install -r requirements.txt
   - pytest . --cov=wiki --cov=wiki_test --cov-report term-missing --cov-branch
