@@ -1,4 +1,5 @@
 from flask import Flask, request, Markup, render_template
+from django.utils.html import strip_tags
 from datetime import datetime
 import os
 
