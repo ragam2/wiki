@@ -1,7 +1,6 @@
 import pytest  # type: ignore
 import wiki
 from flask import Markup
-from wiki import filter_info
 
 CURR_DIR = "pages"
 
@@ -39,7 +38,6 @@ def test_edit_form(client):
     # Tests if the submission form is sending data to correct location,
     # and if the correct page is present in the form.
     resp = client.get("/edit-form/test_page", follow_redirects=True)
-    print(resp.data)
     assert resp.status_code == 200
     assert b"Hello World!" in resp.data
     assert b"/edit/" in resp.data
@@ -48,19 +46,10 @@ def test_edit_form(client):
 
 def test_edit_page(client):
     resp = client.get(
-        "/edit/",
-        follow_redirects=True,
-        data=dict(
-            page_name="test_page",
-            contents=("<h1>Hello World!</h1>" "<p>This the the first test page!</p>"),
-            changes="greeting added",
-        ),
+        "edit-form/test_page?page=test_page",
     )
-    print(resp.data)
-    with open("pages/test_page.txt", "r") as f:
-        expected = bytes(f.read(), "utf-8")
     assert resp.status_code == 200
-    assert expected in resp.data
+    assert b'<!DOCTYPE html>\n<title>"Page Edit</title>\n<!-- url_for() ' in resp.data
 
 
 def test_filter_info():
@@ -70,12 +59,10 @@ def test_filter_info():
     # This asserts that invalid text (<script>, etc) is escaped,
     # and valid text (h1, h2, h3, p, a) is not escaped
     # and no tags also go through
-    assert filter_info("<script>window.alert('Hacked!')</script>") == Markup.escape(
-        "<script>window.alert('Hacked!')</script>"
+
+    assert wiki.filter_info("<h1>Hello World!</h1><p>Hello World!</p>") == (
+        True,
+        Markup("<h1>Hello World!</h1><p>Hello World!</p>"),
     )
 
-    assert filter_info("<h1>Hello World!</h1><p>Hello World!</p>") == Markup(
-        "<h1>Hello World!</h1><p>Hello World!</p>"
-    )
-
-    assert filter_info("Hello World!") == Markup("Hello World!")
+    assert wiki.filter_info("Hello World!") == (True, Markup("Hello World!"))
