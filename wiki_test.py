@@ -1,6 +1,6 @@
 import pytest  # type: ignore
-from flask import Markup
 import wiki
+from flask import Markup
 from wiki import filter_info
 
 CURR_DIR = "pages"

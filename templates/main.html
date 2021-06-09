@@ -6,6 +6,17 @@
 
 <h1>"Links to other pages:</h1>
 <ul style="list-style-type:none;">
-    <li><a href="{{ url_for('get_page_name', page_name='test_page') }}">Test Page</a></li>
-    <li><a href="{{ url_for('get_page_name', page_name='test_page2')}}">Test Page 2</a></li>
+    {% for page in pages %}
+        {% set load_this = page %}
+        {% set url = url_for('get_page_name', page_name=load_this) %}
+        <li><a href="{{ url }}">{{page}}</a></li>
+    {% endfor %}
 </ul>
+
+<h1>Create a new Page!</h1>
+<form name="myform" action="{{url_for('create_page')}}" method="POST">
+    <input type="hidden" name=page_name id=page_name value={{page}}></input>
+    <p><label for="New_Page">New Page Name:</label></p>
+    <p><textarea id="new_page" name="new" style="width: 750px;"></textarea></p>
+    <p><input type="submit"</input></p>
+</form>
