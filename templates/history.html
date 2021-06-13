@@ -1,0 +1,15 @@
+<!DOCTYPE html>
+<form>
+    <input type="submit" formaction="/" value="Back to Homepage" ></input>
+</form>
+
+<fieldset>
+    <legend>History</legend>
+    {% if history %}
+        {% for change in history %}
+            <p>{{change}}</p>
+        {% endfor%}
+    {% else %}
+        <p>No changes have been made to this page</p>
+    {% endif%}
+</fieldset>
