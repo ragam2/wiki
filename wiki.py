@@ -57,6 +57,8 @@ def main():
 def create_page():
     contents = ""
     page_name = request.form["new"]
+    page_name = page_name.replace(" ", "_")
+
     if page_name not in arch_pages:
         path = "pages/" + page_name + ".txt"
         contents = "<h1>" + page_name + "<h1>" + "<p>THIS IS A NEW PAGE</p>"
@@ -66,7 +68,7 @@ def create_page():
         if not status:
             return con
         return render_template(
-            "test_page.html",
+            "editform.html",
             page_name=page_name,
             contents=Markup(contents),
         )
@@ -80,17 +82,17 @@ def get_page_name(page_name: str) -> str:
     # template_path points to HTML template file
 
     fullpath = "pages/" + page_name + ".txt"
-    # template_path = page_name + ".html"
 
     with open(fullpath, "r") as f:
         con = f.read()
-    return render_template("test_page.html", page_name=page_name, contents=Markup(con))
+    return render_template("page.html", page_name=page_name, contents=Markup(con))
 
 
-@app.route("/edit-form/<page_name>")
-def get_edit_form(page_name: str) -> str:
+@app.route("/edit-form/<page_name>", methods=["GET", "POST"])
+def get_edit_form(page_name):
     # Plugs the text file's contents into a render template
     # for the given page
+    # page_name = request.form["page_name"]
     with open("pages/" + page_name + ".txt", "r") as f:
         cc = f.read()
     return render_template("editform.html", current_contents=cc, page=page_name)
@@ -99,6 +101,7 @@ def get_edit_form(page_name: str) -> str:
 @app.route("/history/<page_name>")
 def get_history(page_name):
     # Finds history page, if not found return a default template
+    # page_name = request.form["page_name"]
     hist_path = "history/" + page_name + ".txt"
     content = []
     if os.path.exists(hist_path):
@@ -137,7 +140,6 @@ def edit_page():
 
     # Variables for the text and html file path's for <page_name>
     fullpath = "pages/" + page_name + ".txt"
-    template_path = page_name + ".html"
 
     status, con = filter_info(con)
     # Writes the changes to the text file
@@ -146,8 +148,13 @@ def edit_page():
             f.write(Markup(con))
     else:
         return con
+
     # Returns the template with filtered data
-    return render_template(template_path, contents=Markup(con))
+    return render_template(
+        "page.html",
+        contents=Markup(con),
+        page_name=page_name,
+    )
 
 
 @app.route("/api/v1/page/<page_name>/get")

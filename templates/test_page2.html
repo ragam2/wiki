@@ -3,7 +3,7 @@
 {{contents}}
 <!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
 <form>
-    <input type="hidden" name=page id=page value="test_page2"></input>
+    <input type="hidden" name=page_name id=page_name value="test_page2"></input>
     <input type="submit" formaction="{{ url_for('get_edit_form', page_name='test_page2') }}"
     value="Edit Page"></input>
     <input type="submit" formaction="{{ url_for('get_history', page_name='test_page2') }}" value="View History"></input>
