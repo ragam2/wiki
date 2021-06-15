@@ -7,20 +7,20 @@
    <title>{{ page_name }}</title>
    <body>
        <section class="section has-background-black">
-           <h1 class="title has-text-primary">{{ page_name }}</h1>
-           <pre class="has-text-dark has-background-primary">{{ page_content }}</pre>
+           <h1 class="title has-text-warning">TV Wiki</h1>
+           <pre class="has-text-dark has-background-warning">{{ page_content }}</pre>
            <!-- url_for() finds the route to the given function, and we can pass the function's parameters as well -->
 
-           <h1 class="is-size-4 has-text-primary" >Links to other pages:</h1>
+           <h1 class="is-size-4 has-text-warning" >Links to other pages:</h1>
            <ul style="list-style-type:none;">
                {% for page in pages %}
                    {% set load_this = page %}
                    {% set url = url_for('get_page_name', page_name=load_this) %}
-                   <li><a class="has-text-primary" href="{{ url }}">{{page}}</a></li>
+                   <li><a class="has-text-warning" href="{{ url }}">{{page}}</a></li>
                {% endfor %}
            </ul>
        </section>
-       <section class="section has has-background-primary">
+       <section class="section has has-background-warning">
            <h1 class="title has-text-weight-bold">Create a new Page!</h1>
            <form name="myform" action="{{url_for('create_page')}}" method="POST">
                <input type="hidden" name=page_name id=page_name value={{page}}></input>

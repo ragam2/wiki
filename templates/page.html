@@ -1,20 +1,23 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>{{page_name}}</title>
+        <link rel="stylesheet" href="/static/page.css" />
+        <!-- <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css"> -->
     </head>
-
+    <title>{{page_name}}</title>
     <body>
-        {{contents}}
-        <!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
-        <!-- input type="hidden" can pass information without it needing to be entered by the user-->
-
+        <h1>{{page_name}}</h1>
         <form>
             <input type="hidden" name=page_name id=page_name value={{page_name}}></input>
-            <input type="submit" formaction="{{ url_for('get_edit_form', page_name = page_name) }}" value="Edit Page"></input>
-            <input type="submit" formaction="{{ url_for('get_history', page_name = page_name) }}" value="View History"></input>
-            <input type="submit" formaction="/" value="Back to Homepage" ></input>
+            <input class="button" type="submit" formaction="{{ url_for('get_edit_form', page_name = page_name) }}" value="Edit Page"></input>
+            <input class="button" type="submit" formaction="{{ url_for('get_history', page_name = page_name) }}" value="View History"></input>
+            <input class="button" type="submit" formaction="/" value="Back to Homepage" ></input>
         </form>
+        <div class = "contents">
+        {{contents}}
+        </div>
+        <!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
+        <!-- input type="hidden" can pass information without it needing to be entered by the user-->
     </body>
 
 </html>
