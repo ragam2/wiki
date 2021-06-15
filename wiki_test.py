@@ -27,8 +27,8 @@ def test_front_page(client, tmpdir):
 
 
 def test_page_name(client):
-    resp = client.get("/view/test_page", follow_redirects=True)
-    with open("pages/test_page.txt", "r") as f:
+    resp = client.get("/view/Game_of_Thrones", follow_redirects=True)
+    with open("pages/Game_of_Thrones.txt", "r") as f:
         expected = bytes(f.read(), "utf-8")
     assert resp.status_code == 200
     assert expected in resp.data
@@ -37,15 +37,15 @@ def test_page_name(client):
 def test_edit_form(client):
     # Tests if the submission form is sending data to correct location,
     # and if the correct page is present in the form.
-    resp = client.get("/edit-form/test_page", follow_redirects=True)
+    resp = client.get("/edit-form/Game_of_Thrones", follow_redirects=True)
     assert resp.status_code == 200
-    assert b"Hello World!" in resp.data
+    assert b"Game of Thrones" in resp.data
     assert b"/edit/" in resp.data
 
 
 def test_edit_page(client):
     resp = client.get(
-        "edit-form/test_page?page=test_page",
+        "edit-form/Game_of_Thrones?page=Game_of_Thrones",
     )
     print(resp.data)
     assert resp.status_code == 200

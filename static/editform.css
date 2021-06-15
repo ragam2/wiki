@@ -5,3 +5,9 @@ body{
 .form_box{
     background: gold;
 }
+.button{
+    background-color:gold;
+    color: black;
+    padding: 5px 20px;
+    font-weight: bold;
+}
