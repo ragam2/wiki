@@ -116,45 +116,58 @@ def edit_page(page_name):
     # Receives content and changes information from server
     # page_name = request.form["page_name"]
     con = request.form["contents"]
+    changes = request.form["changes"]
+    editor_name = request.form["Name"]
+    email = request.form["Email"]
 
-    # Capture all change info into a single string
-    edit_details = (
-        "\n:;:Date: "
-        + datetime.now().strftime("%d/%m/%Y %H:%M:%S")
-        + " |Author: "
-        + request.form["Name"]
-        + " |Email: "
-        + request.form["Email"]
-        + " |Change(s): "
-        + request.form["changes"]
-    )
+    if changes and editor_name and email:
+        # Capture all change info into a single string
+        edit_details = (
+            "\n:;:Date: "
+            + datetime.now().strftime("%d/%m/%Y %H:%M:%S")
+            + " |Author: "
+            + editor_name
+            + " |Email: "
+            + email
+            + " |Change(s): "
+            + changes
+        )
 
-    # check if history page exists and write or append the new changes
-    hist_path = "history/" + page_name + ".txt"
-    if os.path.exists(hist_path):
-        with open(hist_path, "a") as w:
-            w.write(edit_details)
+        # check if history page exists and write or append the new changes
+        hist_path = "history/" + page_name + ".txt"
+        if os.path.exists(hist_path):
+            with open(hist_path, "a") as w:
+                w.write(edit_details)
+        else:
+            with open(hist_path, "w") as w:
+                w.write(edit_details)
+
+        # Variables for the text and html file path's for <page_name>
+        fullpath = "pages/" + page_name + ".txt"
+
+        status, con = filter_info(con)
+        # Writes the changes to the text file
+        if status:
+            with open(fullpath, "w") as f:
+                f.write(Markup(con))
+        else:
+            return con
+
+        # Returns the template with filtered data
+        return render_template(
+            "page.html",
+            contents=Markup(con),
+            page_name=page_name,
+        )
     else:
-        with open(hist_path, "w") as w:
-            w.write(edit_details)
-
-    # Variables for the text and html file path's for <page_name>
-    fullpath = "pages/" + page_name + ".txt"
-
-    status, con = filter_info(con)
-    # Writes the changes to the text file
-    if status:
-        with open(fullpath, "w") as f:
-            f.write(Markup(con))
-    else:
-        return con
-
-    # Returns the template with filtered data
-    return render_template(
-        "page.html",
-        contents=Markup(con),
-        page_name=page_name,
-    )
+        return render_template(
+            "editform.html",
+            current_contents=Markup(con),
+            page=page_name,
+            error=Markup(
+                "<script>window.alert('Remember to fill in all fields!')</script>"
+            ),
+        )
 
 
 @app.route("/api/v1/page/<page_name>/get")

@@ -6,6 +6,7 @@
     <title>Page Edit</title>
     <!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
     <!-- input type="hidden" can pass information without it needing to be entered by the user-->
+    {{error}}
     <body>
         <h1>Currently Editing: {{page}}</h1>
         <form action="{{url_for('edit_page', page_name = page)}}" method="POST">
