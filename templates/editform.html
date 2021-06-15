@@ -1,29 +1,36 @@
 <!DOCTYPE html>
-<title>Page Edit</title>
-<!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
-<!-- input type="hidden" can pass information without it needing to be entered by the user-->
-<h1>Currently Editing: {{page_name}}</h1>
-<form action="{{url_for('edit_page')}}" method="POST">
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/editform.css" />
+    </head>
+    <title>Page Edit</title>
+    <!-- url_for() finds the route to the given function, and we can pass its parameters as well -->
+    <!-- input type="hidden" can pass information without it needing to be entered by the user-->
+    <body>
+        <h1>Currently Editing: {{page}}</h1>
+        <form action="{{url_for('edit_page', page_name = page)}}" method="POST">
 
-    <input type="hidden" name=page_name id=page_name value={{page_name}}></input>
+            <input class="form_box" type="hidden" name=page_name id=page_name value={{page_name}}></input>
 
-    <p><label for="content_box">Enter your changes:</label></p>
+            <p><label for="content_box">Enter your changes:</label></p>
 
-    <p>
-        <textarea id="content_box" name="contents"
-        style="width: 750px; font-size: 14px; height: 500px;">{{current_contents}}</textarea>
-    </p>
+            <p>
+                <textarea class="form_box" id="content_box" name="contents"
+                style="width: 750px; font-size: 14px; height: 500px;">{{current_contents}}</textarea>
+            </p>
 
-    <p><label for="changes_box">Briefly describe what changes you've made:</label></p>
+            <p><label for="changes_box">Briefly describe what changes you've made:</label></p>
 
-    <p><textarea id="changes_box" name="changes" style="width: 750px;"></textarea></p>
+            <p><textarea class="form_box" id="changes_box" name="changes" style="width: 750px;"></textarea></p>
 
-    <p><label for="Editor_Name">Your Name:</label></p>
-    <p><textarea id="Editor_Name" name="Name" style="width: 750px;"></textarea></p>
+            <p><label for="Editor_Name">Your Name:</label></p>
+            <p><textarea class="form_box" id="Editor_Name" name="Name" style="width: 750px;"></textarea></p>
 
 
-    <p><label for="Editor_Email">Your Email:</label></p>
-    <p><textarea id="Editor_Email" name="Email" style="width: 750px;"></textarea></p>
+            <p><label for="Editor_Email">Your Email:</label></p>
+            <p><textarea class="form_box" id="Editor_Email" name="Email" style="width: 750px;"></textarea></p>
 
-    <p><input type="submit"</input></p>
-</form>
+            <p><input type="submit"</input></p>
+        </form>
+    </body>
+</html>
