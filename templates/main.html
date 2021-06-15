@@ -1,22 +1,33 @@
 <!DOCTYPE html>
-<title>{{ page_name }}</title>
-<h1>{{ page_name }}</h1>
-<pre>{{ page_content }}</pre>
-<!-- url_for() finds the route to the given function, and we can pass the function's parameters as well -->
+<html>
+   <head>
+       <link rel="stylesheet" href="/static/main.css" />
+       <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
+   </head>
+   <title>{{ page_name }}</title>
+   <body>
+       <section class="section has-background-black">
+           <h1 class="title has-text-primary">{{ page_name }}</h1>
+           <pre class="has-text-dark has-background-primary">{{ page_content }}</pre>
+           <!-- url_for() finds the route to the given function, and we can pass the function's parameters as well -->
 
-<h1>Links to other pages:</h1>
-<ul style="list-style-type:none;">
-    {% for page in pages %}
-        {% set load_this = page %}
-        {% set url = url_for('get_page_name', page_name=load_this) %}
-        <li><a href="{{ url }}">{{page}}</a></li>
-    {% endfor %}
-</ul>
-
-<h1>Create a new Page!</h1>
-<form name="myform" action="{{url_for('create_page')}}" method="POST">
-    <input type="hidden" name=page_name id=page_name value={{page}}></input>
-    <p><label for="New_Page">New Page Name:</label></p>
-    <p><textarea id="new_page" name="new" style="width: 750px;"></textarea></p>
-    <p><input type="submit"</input></p>
-</form>
+           <h1 class="is-size-4 has-text-primary" >Links to other pages:</h1>
+           <ul style="list-style-type:none;">
+               {% for page in pages %}
+                   {% set load_this = page %}
+                   {% set url = url_for('get_page_name', page_name=load_this) %}
+                   <li><a class="has-text-primary" href="{{ url }}">{{page}}</a></li>
+               {% endfor %}
+           </ul>
+       </section>
+       <section class="section has has-background-primary">
+           <h1 class="title has-text-weight-bold">Create a new Page!</h1>
+           <form name="myform" action="{{url_for('create_page')}}" method="POST">
+               <input type="hidden" name=page_name id=page_name value={{page}}></input>
+               <p><label for="New_Page">New Page Name:</label></p>
+               <p><textarea id="new_page" name="new" style="width: 750px;"></textarea></p>
+               <p><input class = "button is-dark", type="submit"></input></p>
+           </form>
+       </section>
+   </body>
+</html>
