@@ -41,15 +41,16 @@ def test_edit_form(client):
     assert resp.status_code == 200
     assert b"Hello World!" in resp.data
     assert b"/edit/" in resp.data
-    assert b"test_page" in resp.data
 
 
 def test_edit_page(client):
     resp = client.get(
         "edit-form/test_page?page=test_page",
     )
+    print(resp.data)
     assert resp.status_code == 200
-    assert b'<!DOCTYPE html>\n<title>"Page Edit</title>\n<!-- url_for() ' in resp.data
+    assert b"Page Edit" in resp.data
+    assert b"Enter your changes" in resp.data
 
 
 def test_filter_info():
