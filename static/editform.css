@@ -11,3 +11,10 @@ body{
     padding: 5px 20px;
     font-weight: bold;
 }
+.contents{
+    border-style: solid;
+    border-radius: 1px;
+    margin-left: 5px;
+    margin-right: 5px;
+    text-indent: 20px;
+}
