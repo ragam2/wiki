@@ -13,7 +13,7 @@ def filter_info(con: str) -> tuple:
     # we can check the contents after a open brace is encountered to see
     # if it matches allowed tags
     # Currently brute-force gonna try to find library that does this better
-    allowed = "<h1</h1<h2</h2<h3</h3<a></a<p></p<img"
+    allowed = "<h1</h1<h2</h2<h3</h3<a></a<p></p<img<br"
     safe = True
     string = str(con)
     for i in range(len(con)):
@@ -30,7 +30,7 @@ def filter_info(con: str) -> tuple:
                     "Failure.html",
                     page_name="Failed",
                     read_so_far=string[: string[i:].index(">") + i + 1],
-                    issue=string[: string.index(">") + 1],
+                    issue=string[: string.index(">") + i + 1],
                     whole=string,
                 )
     return True, con
@@ -61,7 +61,7 @@ def create_page():
 
     if page_name not in arch_pages:
         path = "pages/" + page_name + ".txt"
-        contents = "<h1>" + page_name + "<h1>" + "<p>THIS IS A NEW PAGE</p>"
+        contents = "<h1>" + page_name + "</h1>" + "<p>THIS IS A NEW PAGE</p>"
         with open(path, "w") as r:
             r.write(contents)
         status, con = filter_info(contents)
@@ -82,10 +82,11 @@ def get_page_name(page_name: str) -> str:
     # template_path points to HTML template file
 
     fullpath = "pages/" + page_name + ".txt"
-
-    with open(fullpath, "r") as f:
-        con = f.read()
-    return render_template("page.html", page_name=page_name, contents=Markup(con))
+    if os.path.exists(fullpath):
+        with open(fullpath, "r") as f:
+            con = f.read()
+        return render_template("page.html", page_name=page_name, contents=Markup(con))
+    return main()
 
 
 @app.route("/edit-form/<page_name>", methods=["GET", "POST"])
@@ -108,7 +109,7 @@ def get_history(page_name):
         with open(hist_path, "r") as r:
             raw = r.read()
         content = raw.split(":;:")
-    return render_template("history.html", history=content)
+    return render_template("history.html", history=content, page=page_name)
 
 
 @app.route("/edit/<page_name>", methods=["GET", "POST"])
@@ -121,6 +122,15 @@ def edit_page(page_name):
     email = request.form["Email"]
 
     if changes and editor_name and email:
+        if "@" not in email or " " in email:
+            return render_template(
+                "editform.html",
+                current_contents=Markup(con),
+                page=page_name,
+                error=Markup(
+                    "<script>window.alert('Email content is not valid')</script>"
+                ),
+            )
         # Capture all change info into a single string
         edit_details = (
             "\n:;:Date: "

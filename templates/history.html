@@ -1,6 +1,11 @@
 <!DOCTYPE html>
+<html>
+    <head>
+        <link rel="stylesheet" href="/static/page.css" />
+    </head>
 <form>
-    <input type="submit" formaction="/" value="Back to Homepage" ></input>
+    <input class="button" type="submit" formaction="{{ url_for('get_page_name', page_name = page) }}" value="View Page"></input>
+    <input class="button" type="submit" formaction="/" value="Back to Homepage" ></input>
 </form>
 
 <fieldset>
@@ -13,3 +18,4 @@
         <p>No changes have been made to this page</p>
     {% endif%}
 </fieldset>
+</html>

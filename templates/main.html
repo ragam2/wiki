@@ -5,18 +5,18 @@
        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.2/css/bulma.min.css">
    </head>
    <title>{{ page_name }}</title>
-   <body>
+   <body class = "has-background-dark">
        <section class="section has-background-black">
            <h1 class="title has-text-warning">TV Wiki</h1>
            <pre class="has-text-dark has-background-warning">{{ page_content }}</pre>
            <!-- url_for() finds the route to the given function, and we can pass the function's parameters as well -->
 
-           <h1 class="is-size-4 has-text-warning" >Links to other pages:</h1>
+           <h1 class="is-size-3 has-text-warning has-text-weight-bold" >Pages:</h1>
            <ul style="list-style-type:none;">
                {% for page in pages %}
                    {% set load_this = page %}
                    {% set url = url_for('get_page_name', page_name=load_this) %}
-                   <li><a class="has-text-warning" href="{{ url }}">{{page}}</a></li>
+                   <li><a class="has-text-warning" href="{{ url }}">* {{page}}</a></li>
                {% endfor %}
            </ul>
        </section>

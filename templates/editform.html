@@ -9,9 +9,11 @@
     {{error}}
     <body>
         <h1>Currently Editing: {{page}}</h1>
+        <form>
+            <input class="button" type="submit" formaction="{{ url_for('get_page_name', page_name = page) }}" value="View Page"></input>
+            <input class="button" type="submit" formaction="/" value="Back to Homepage"></input>
+        </form>
         <form action="{{url_for('edit_page', page_name = page)}}" method="POST">
-
-            <input class="form_box" type="hidden" name=page_name id=page_name value={{page_name}}></input>
 
             <p><label for="content_box">Enter your changes:</label></p>
 
