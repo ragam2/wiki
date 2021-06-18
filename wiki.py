@@ -30,7 +30,7 @@ def filter_info(con: str) -> tuple:
                     "Failure.html",
                     page_name="Failed",
                     read_so_far=string[: string[i:].index(">") + i + 1],
-                    issue=string[: string.index(">") + i + 1],
+                    issue="<script>",
                     whole=string,
                 )
     return True, con
