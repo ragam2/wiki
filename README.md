@@ -6,8 +6,8 @@ A wiki server that uses text files on the local filesystem to store page data. A
 
 ![A screenshot of the front page of the wiki. Includes the page navigator and a feature to create a new page](screenshots/FrontPage.png)
 
-![A screentshoot of a Page in the wiki,  where the user can see athe current cintent it has, and also access an edit form of the page or the history of changes made.](screenshots/ViewPage.png)
-![Edit Form screentshot, where the suer can change or add to the current content, also needs to add a description of the change, their name and their email](screenshots/EditForm.png)
+![A screentshot of a Page in the wiki,  where the user can see the current content it has, and also access an edit form of the page or the history of changes made.](screenshots/ViewPage.png)
+![Edit Form screenshot, where the user can change or add to the current content, also requires them to add a description of the changes, their name and their email](screenshots/EditForm.png)
 ![View history of page, keeps track pf the changes made in a page. Includes date and hour it was made, description of the change, and nthe name and the email of the user that made it](screenshots/ViewHistory.png)
 
 ## Installation
